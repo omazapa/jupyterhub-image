@@ -27,7 +27,7 @@ ARG PYPOSTGRES_VERSION="2.7.5"
 ARG LDAPAUTHENTICATOR_VERSION="1.3.2"
 ARG DUMMYAUTHENTICATOR_VERSION="0.3.1"
 
-ARG JUPYTERHUB_VERSION="1.1.0"
+ARG JUPYTERHUB_VERSION="1.4.1"
 ARG CHP_VERSION="4.2.0"
 ARG COMMON_ASSETS_TAG="v2.5"
 
@@ -188,6 +188,10 @@ ADD ./jupyterhub.d/adminslist /srv/jupyterhub/adminslist
 RUN mv /etc/supervisord.d/sssd.noload /etc/supervisord.d/sssd.ini && \
     mv /etc/supervisord.d/httpd.noload /etc/supervisord.d/httpd.ini
 ADD ./supervisord.d/jupyterhub.ini /etc/supervisord.d/jupyterhub.ini
+
+
+# ----- Required for jupyter server ----- #
+ENV JUPYTERHUB_SINGLEUSER_APP=jupyter_server.serverapp.ServerApp
 
 # ----- Run the setup script in the container ----- #
 ADD ./jupyterhub.d/start.sh /root/start.sh
